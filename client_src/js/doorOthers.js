@@ -64,9 +64,24 @@ function Door1(number, onUnlock) {
 
     // ==== Напишите свой код для открытия второй двери здесь ====
     // Для примера дверь откроется просто по клику на неё
-    this.popup.addEventListener('click', function() {
-        this.unlock();
-    }.bind(this));
+    
+    var buttons = [
+        this.popup.querySelector('.door-riddle__button_0'),
+        this.popup.querySelector('.door-riddle__button_1'),
+    ];
+    buttons.forEach(function(b) {
+        b.addEventListener('pointerdown',   function(e) {console.log('event = pointerdown = ', e)}.bind(this));
+        //b.addEventListener('pointermove',   function(e) {console.log('event = pointermove = ', e)}.bind(this));
+        b.addEventListener('intercancel',   function(e) {console.log('event = intercancel = ', e)}.bind(this));
+        b.addEventListener('pointercancel', function(e) {console.log('event = pointercancel = ', e)}.bind(this));
+        b.addEventListener('pointerover',   function(e) {console.log('event = pointerover = ', e)}.bind(this));
+        b.addEventListener('pointerout',    function(e) {console.log('event = pointerout = ', e)}.bind(this));
+        b.addEventListener('pointerenter',  function(e) {console.log('event = pointerenter = ', e)}.bind(this));
+        b.addEventListener('pointerleave',  function(e) {console.log('event = pointerleave = ', e)}.bind(this));
+    });
+    // this.popup.addEventListener('click', function() {
+    //     this.unlock();
+    // }.bind(this));
     // ==== END Напишите свой код для открытия второй двери здесь ====
 }
 Door1.prototype = Object.create(DoorBase.prototype);
