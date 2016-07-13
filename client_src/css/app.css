@@ -198,3 +198,50 @@ body {
 .drag {
     position: relative;
 }
+.door-riddle__header {
+    width: 100%;
+    position: relative;
+}
+.door-riddle__content {
+    width: 100%;
+    position: relative;
+}
+.door-riddle__footer {
+    width: 100%;
+    position: relative;
+}
+.button-position {
+    position: absolute;
+}
+.button-position__press_0 {
+    left: 40px;
+}
+.button-position__press_1 {
+    right: 40px;
+}
+.button-position__drag_0 {
+    left: 100px;
+    z-index: 10px;
+}
+.button-position__drag_1 {
+    right: 100px;
+    z-index: 10px;
+}
+.button-position__drop_0 {
+    left: 100px;
+    z-index: 20px;
+}
+.button-position__drop_1 {
+    right: 100px;
+    z-index: 20px;
+}
+
+.button_error {
+    background-color: red;
+}
+
+.button_success {
+    background-color:green;
+}
+.popup_level_1 {
+}

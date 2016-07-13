@@ -1,30 +1,76 @@
 
 class ButtonBase {
-    constructor(attribute, attributeValue) {
+    constructor(attribute, attributeValue, parentElement) {
         this.attribute = attribute;
         this.attributeKey = `data-${attribute}-id`;
         this.attributeValue = attributeValue;
+        this.element = parentElement.querySelector(`[${this.attributeKey}="${this.attributeValue}"]`)
+        this.isActive = false;
+        var clientPoint = this.element.getBoundingClientRect();
+        this.clientPoint = {
+            top: clientPoint.top,
+            left: clientPoint.left,
+        }
+        this.startPoint = {
+            top: this.element.offsetTop - this.element.offsetHeight/2,
+            left: this.element.offsetLeft - this.element.offsetWidth/2
+        }
     }
-    enter(e) {
-        console.log('enter = ', `enter_hidden_${this.attributeKey}_${this.attributeValue}`)
-        e.target.classList.add(`enter_hidden_${this.attributeKey}_${this.attributeValue}`);
+    resetMoveStyle() {
+        this.element.style.top = '';
+        this.element.style.left = '';
     }
 }
 
+
 class ButtonPerss extends ButtonBase{
-    constructor(attributeValue) {
-        super('button-press', attributeValue);
+    constructor(attributeValue, parentElement) {
+        super('button-press', attributeValue, parentElement);
+    }
+    enter(e) {
+        this.element.classList.remove(`button_error`);
+        this.element.classList.add(`button_success`);
+        this.isActive = true;
+        //e.target.setPointerCapture(e.pointerId);
+    }
+    leave(e) {
+        this.element.classList.remove(`button_success`);
+        this.element.classList.add(`button_error`);
+        //this.isActive = false;
     }
 }
 
  class ButtonDrag extends ButtonBase{
-    constructor(attributeValue) {
-        super('button-drag', attributeValue);
+    constructor(attributeValue, parentElement) {
+        super('button-drag', attributeValue, parentElement);
+    }
+    enter(e) {
+        this.element.classList.add(`door-riddle__button_pressed`);
+        this.isActive = true;
+        e.target.setPointerCapture(e.pointerId);
+    }
+    move(e) {
+        this.element.style.top = this.startPoint.top + (e.y - this.clientPoint.top) + 'px';
+        this.element.style.left = this.startPoint.left + (e.x - this.clientPoint.left) + 'px';
+        this.element.style.position = 'absolute';
+    }
+    leave(e) {
+        this.element.classList.remove(`door-riddle__button_pressed`);
+        this.isActive = false;
     }
 }
 
  class ButtonDrop extends ButtonBase{
-    constructor(attributeValue) {
-        super('button-drop', attributeValue);
+    constructor(attributeValue, parentElement) {
+        super('button-drop', attributeValue, parentElement);
+    }
+    
+    enter(e) {
+        this.element.classList.add(`button_success`);
+        this.isActive = true;
+    }
+    leave(e) {
+        this.element.classList.remove(`button_success`);
+        this.isActive = false;
     }
 }

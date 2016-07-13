@@ -59,44 +59,67 @@ Door0.prototype.constructor = DoorBase;
  * @param {Number} number
  * @param {Function} onUnlock
  */
+var a = 1;
 function Door1(number, onUnlock) {
     DoorBase.apply(this, arguments);
 
     // ==== Напишите свой код для открытия второй двери здесь ====
     // Для примера дверь откроется просто по клику на неё
-    let buttonPerss_0 = new ButtonPerss(0);
-    let buttonPerss_1 = new ButtonPerss(1);
-    let buttonDrag_0 = new ButtonDrag(0);
-    let buttonDrag_1 = new ButtonDrag(1);
-    let buttonDrop_0 = new ButtonDrop(0);
-    let buttonDrop_1 = new ButtonDrop(1);
-    this.popup.addEventListener('pointerdown', (e) => buttonPerss_0.enter(e));
-    var buttons = [];
-    buttons.forEach(function(b) {
+    let buttonsPerss = [new ButtonPerss(0, this.popup), new ButtonPerss(1, this.popup)];
+    let buttonsDrag = [new ButtonDrag(0, this.popup), new ButtonDrag(1, this.popup)];
+    let buttonsDrop = [new ButtonDrop(0, this.popup), new ButtonDrop(1, this.popup)];
 
-        // b.addEventListener('pointerdown', function(e) {
-        //     e.target.setPointerCapture(e.pointerId);
-        //     e.target.style.opacity = .5;
-        //     e.target.style.borderColor = 'red';
-        //     e.target.style.top = e.y + 'px';
-        //     e.target.style.position = 'absolute';
-            
-        //     console.log('event = pointerdown = ', e);
-        //     console.log('this.popup = ', this.popup);
-        // });
-        // b.addEventListener('pointermove',   function(e) {
-        //     e.target.style.top = e.y + 'px';
-        // });
-        // b.addEventListener('pointercancel',   function(e) {console.log('event = intercancel = ', e)}.bind(this));
-        // b.addEventListener('pointercancel', function(e) {console.log('event = pointercancel = ', e)}.bind(this));
-        // b.addEventListener('pointerover',   function(e) {console.log('event = pointerover = ', e)}.bind(this));
-        // b.addEventListener('pointerout',    function(e) {console.log('event = pointerout = ', e)}.bind(this));
-        // b.addEventListener('pointerenter',  function(e) {console.log('event = pointerenter = ', e)}.bind(this));
-        // b.addEventListener('pointerleave',  function(e) {console.log('event = pointerleave = ', e)}.bind(this));
-    });
+    /// start events buttonPerss
+    
+    buttonsPerss.forEach((button) => {
+        button.element.addEventListener('pointerdown', (e) => {
+            button.enter(e)
+        });
+        
+        button.element.addEventListener('pointerup', (e) => {
+            button.leave(e)
+        });
+    })
+    /// end events buttonPerss 
+    
+    /// start events buttonDrag
+    buttonsDrag.forEach((button, buttonKey) => {
+        button.element.addEventListener('pointerdown', (e) => {
+            if (!buttonsPerss[buttonKey].isActive) return;
+            button.enter(e)
+        });
+        
+        button.element.addEventListener('pointermove', (e) => {
+            if (!button.isActive) return; 
+            if (!buttonsPerss[buttonKey].isActive) {
+                button.resetMoveStyle();
+                return;
+            }
+            button.move(e)
+        });
 
-    function init() {
-    }
+        button.element.addEventListener('pointerup', (e) => {
+            button.leave(e)
+            if (buttonsDrop[buttonKey].isActive === false) {
+                button.resetMoveStyle();
+            } 
+        });
+    })
+    /// end events buttonDrag 
+    
+    
+    /// start events buttonDrop
+    buttonsDrop.forEach((button, buttonKey) => {
+        button.element.addEventListener('pointerenter', (e) => {
+            if (!buttonsPerss[buttonKey].isActive || !buttonsDrag[buttonKey].isActive) return;
+            button.enter(e)
+        });
+
+        button.element.addEventListener('pointerleave', (e) => {
+            button.leave(e)
+        });
+    })
+    /// end events buttonDrop 
     // this.popup.addEventListener('click', function() {
     //     this.unlock();
     // }.bind(this));
