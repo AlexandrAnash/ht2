@@ -64,32 +64,39 @@ function Door1(number, onUnlock) {
 
     // ==== Напишите свой код для открытия второй двери здесь ====
     // Для примера дверь откроется просто по клику на неё
-    
-    var buttons = [
-        this.popup.querySelector('.door-riddle__button_0'),
-        this.popup.querySelector('.door-riddle__button_1'),
-    ];
+    let buttonPerss_0 = new ButtonPerss(0);
+    let buttonPerss_1 = new ButtonPerss(1);
+    let buttonDrag_0 = new ButtonDrag(0);
+    let buttonDrag_1 = new ButtonDrag(1);
+    let buttonDrop_0 = new ButtonDrop(0);
+    let buttonDrop_1 = new ButtonDrop(1);
+    this.popup.addEventListener('pointerdown', (e) => buttonPerss_0.enter(e));
+    var buttons = [];
     buttons.forEach(function(b) {
-        b.addEventListener('pointerdown', function(e) {
-            e.target.setPointerCapture(e.pointerId);
-            e.target.style.opacity = .5;
-            e.target.style.borderColor = 'red';
-            e.target.style.top = e.y + 'px';
-            e.target.style.position = 'absolute';
+
+        // b.addEventListener('pointerdown', function(e) {
+        //     e.target.setPointerCapture(e.pointerId);
+        //     e.target.style.opacity = .5;
+        //     e.target.style.borderColor = 'red';
+        //     e.target.style.top = e.y + 'px';
+        //     e.target.style.position = 'absolute';
             
-            console.log('event = pointerdown = ', e);
-            console.log('this.popup = ', this.popup);
-        }.bind(this));
-        b.addEventListener('pointermove',   function(e) {
-            e.target.style.top = e.y + 'px';
-        }.bind(this));
-        b.addEventListener('intercancel',   function(e) {console.log('event = intercancel = ', e)}.bind(this));
-        b.addEventListener('pointercancel', function(e) {console.log('event = pointercancel = ', e)}.bind(this));
-        b.addEventListener('pointerover',   function(e) {console.log('event = pointerover = ', e)}.bind(this));
-        b.addEventListener('pointerout',    function(e) {console.log('event = pointerout = ', e)}.bind(this));
-        b.addEventListener('pointerenter',  function(e) {console.log('event = pointerenter = ', e)}.bind(this));
-        b.addEventListener('pointerleave',  function(e) {console.log('event = pointerleave = ', e)}.bind(this));
-    }.bind(this));
+        //     console.log('event = pointerdown = ', e);
+        //     console.log('this.popup = ', this.popup);
+        // });
+        // b.addEventListener('pointermove',   function(e) {
+        //     e.target.style.top = e.y + 'px';
+        // });
+        // b.addEventListener('pointercancel',   function(e) {console.log('event = intercancel = ', e)}.bind(this));
+        // b.addEventListener('pointercancel', function(e) {console.log('event = pointercancel = ', e)}.bind(this));
+        // b.addEventListener('pointerover',   function(e) {console.log('event = pointerover = ', e)}.bind(this));
+        // b.addEventListener('pointerout',    function(e) {console.log('event = pointerout = ', e)}.bind(this));
+        // b.addEventListener('pointerenter',  function(e) {console.log('event = pointerenter = ', e)}.bind(this));
+        // b.addEventListener('pointerleave',  function(e) {console.log('event = pointerleave = ', e)}.bind(this));
+    });
+
+    function init() {
+    }
     // this.popup.addEventListener('click', function() {
     //     this.unlock();
     // }.bind(this));

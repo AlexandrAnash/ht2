@@ -168,6 +168,9 @@ body {
     justify-content: space-around;
     height: 100%;
 }
+.door-riddle_column {
+    flex-direction: column;
+}
 
 .door-riddle__button {
     width: 64px;
