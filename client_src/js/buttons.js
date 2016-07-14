@@ -11,23 +11,30 @@ class ButtonBase {
             top: clientPoint.top,
             left: clientPoint.left,
         }
+        var staticCoordinate = {
+            top: this.clientPoint.top + this.element.offsetTop,
+            left: this.clientPoint.left + this.element.offsetLeft,
+            height: this.element.offsetHeight,
+            width: this.element.offsetWidth
+        }
         this.startPoint = {
             top: this.element.offsetTop - this.element.offsetHeight/2,
             left: this.element.offsetLeft - this.element.offsetWidth/2
         }
     }
+    getCoordinate() {
+            return {
+                y: this.clientPoint.top + this.element.offsetTop,
+                x: this.clientPoint.left + this.element.offsetLeft,
+                height: this.element.offsetHeight,
+                width: this.element.offsetWidth
+            }
+        }
     resetMoveStyle() {
         this.element.style.top = '';
         this.element.style.left = '';
     }
-    getCoordinate() {
-        return {
-            y: this.clientPoint.top + this.element.offsetTop,
-            x: this.clientPoint.left + this.element.offsetLeft,
-            height: this.element.offsetHeight,
-            width: this.element.offsetWidth
-        }
-    }
+    
 }
 
 
@@ -41,7 +48,8 @@ class ButtonPerss extends ButtonBase{
         this.isActive = true;
         e.target.setPointerCapture(e.pointerId);
     }
-    leave(e) {
+    leave(e, isActive) {
+        if (isActive === true) return;
         this.element.classList.remove(`button_success`);
         this.element.classList.add(`button_error`);
         this.isActive = false;

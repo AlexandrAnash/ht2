@@ -235,7 +235,7 @@ function Box(number, onUnlock) {
         new ButtonDrop(1, this.popup)
     ];
     let buttonsPressKey = [
-        new ButtonPerssBox(0, this.popup)
+        //new ButtonPerssBox(0, this.popup)
     ]
 
     /// start events buttonPerss
@@ -243,12 +243,12 @@ function Box(number, onUnlock) {
     buttonsPress.forEach((button) => {
         button.element.addEventListener('pointerdown', (e) => {
             button.enter(e);
-            updateVisible();
+            updateVisible.apply(this);
         });
         
         button.element.addEventListener('pointerup', (e) => {
-            button.leave(e)
-            updateVisible();
+            button.leave(e, true);
+            updateVisible.apply(this);
         });
     })
     buttonsPressKey.forEach((button) => {
@@ -256,26 +256,26 @@ function Box(number, onUnlock) {
             button.enter(e);
         });
         
-        button.element.addEventListener('pointermove', (e) => {
-            if (!button.isActive) return; 
-            button.move(e);
-            const dragCoordinate = button.getCoordinate();
-            buttonsPress.forEach((bp) => {
-                const dropCoordinate = bp.getCoordinate();
-                if (getInterval(dragCoordinate, dropCoordinate, axisEnum.x, 1) 
-                    && getInterval(dragCoordinate, dropCoordinate, axisEnum.y, 1)) {
-                        if (!bp.isActive){
-                            bp.enter();
-                            updateVisible();
-                        }
-                } else {
-                    if (bp.isActive) {
-                        bp.leave();
-                        updateVisible();
-                    }
-                }
-            });
-        });
+        // button.element.addEventListener('pointermove', (e) => {
+        //     if (!button.isActive) return; 
+        //     button.move(e);
+        //     const dragCoordinate = button.getCoordinate();
+        //     buttonsPress.forEach((bp) => {
+        //         const dropCoordinate = bp.getCoordinate();
+        //         if (getInterval(dragCoordinate, dropCoordinate, axisEnum.x, 0.5) 
+        //             && getInterval(dragCoordinate, dropCoordinate, axisEnum.y, 0.5)) {
+        //                 if (!bp.isActive){
+        //                     bp.enter(e);
+        //                     updateVisible();
+        //                 }
+        //         } else {
+        //             if (bp.isActive) {
+        //                 bp.leave(e);
+        //                 updateVisible();
+        //             }
+        //         }
+        //     });
+        // });
 
         button.element.addEventListener('pointerup', (e) => {
             button.leave(e);
@@ -283,14 +283,96 @@ function Box(number, onUnlock) {
     })
     /// end events buttonPerss 
     
-    function updateVisible() {
+    /// start events buttonDrag
+    buttonsDrag.forEach((button, buttonKey) => {
+        button.element.addEventListener('pointerdown', (e) => {
+            let isActive = getActiveBySwitch(buttonKey);
+            
+            if (!isActive) return;
+            button.enter(e)
+        });
+        
+        button.element.addEventListener('pointermove', (e) => {
+            let isActive = getActiveBySwitch();
+            if (!button.isActive) return; 
+            if (!isActive) {
+                button.resetMoveStyle();
+                return;
+            }
+            button.move(e);
+            const dragCoordinate = button.getCoordinate();
+            const dropCoordinate = buttonsDrop[buttonKey].getCoordinate();
+            if (getInterval(dragCoordinate, dropCoordinate, axisEnum.x, 0.5) 
+                && getInterval(dragCoordinate, dropCoordinate, axisEnum.y, 0.5)) {
+                     if (!buttonsDrop[buttonKey].isActive){
+                        buttonsDrop[buttonKey].enter();
+                        checkUnlodk.apply(this);
+                     }
+            } else {
+                if (buttonsDrop[buttonKey].isActive) {
+                    buttonsDrop[buttonKey].leave();
+                }
+            }
+        });
+        
+        button.element.addEventListener('pointerup', (e) => {
+            button.leave(e)
+            if (buttonsDrop[buttonKey].isActive === false) {
+                button.resetMoveStyle();
+            } 
+        });
+    });
+    function getActiveBySwitch(buttonKey) {
+            let isActive = true;
+        switch (buttonKey) {
+            case 0:
+                isActive = buttonsPress[0].isActive && buttonsPress[1].isActive; 
+                break;
+            case 1:
+                isActive = buttonsPress[2].isActive && buttonsPress[3].isActive; 
+                break;
+        }
+        return isActive
+    }
+    function getActiveMore(size) {
         countActive = 0;
         buttonsPress.forEach((button) => {
             countActive += button.isActive === true ? 1 : 0;
         })
-        isVisibleDrag = countActive >= 2;
+        return countActive >= 2;
+        
     }
-
+    /// end events buttonDrag 
+    function updateVisible() {
+        isVisibleDragBefore = isVisibleDrag;
+        isVisibleDrag = getActiveMore();
+        if (isVisibleDragBefore === false && isVisibleDrag === true) {
+            this.popup.querySelector('[data-button-drag-id="0"]').classList.remove('hide');
+        }
+        if (isVisibleDragBefore === true && isVisibleDrag === false) {
+            this.popup.querySelector('[data-button-drag-id="0"]').classList.add('hide');
+        }
+    }
+    function isAllActive() {
+        let isActive = true;
+        buttonsPress.forEach(function(b) {
+            if (!b.isActive) {
+                isActive = false;
+            }
+        });
+        return isActive;
+    }
+    function checkUnlodk() {
+        var isOpened = true;
+        buttonsDrop.concat(buttonsPress).forEach(function(b) {
+            if (!b.isActive) {
+                isOpened = false;
+            }
+        });
+        if (isOpened) {
+            this.unlock();
+        }   
+    }
     // ==== END Напишите свой код для открытия сундука здесь ====
 
     this.showCongratulations = function() {
