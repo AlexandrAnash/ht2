@@ -219,7 +219,7 @@ function Box(number, onUnlock) {
     
     // ==== Напишите свой код для открытия сундука здесь ====
     // Для примера сундук откроется просто по клику на него
-    let isVisibleDrag = false;
+    var isVisibleDrag = false;
     let buttonsPress = [
         new ButtonPerss(0, this.popup),
         new ButtonPerss(1, this.popup),
@@ -335,7 +335,7 @@ function Box(number, onUnlock) {
         return isActive
     }
     function getActiveMore(size) {
-        countActive = 0;
+        let countActive = 0;
         buttonsPress.forEach((button) => {
             countActive += button.isActive === true ? 1 : 0;
         })
@@ -344,7 +344,7 @@ function Box(number, onUnlock) {
     }
     /// end events buttonDrag 
     function updateVisible() {
-        isVisibleDragBefore = isVisibleDrag;
+        let isVisibleDragBefore = isVisibleDrag;
         isVisibleDrag = getActiveMore();
         if (isVisibleDragBefore === false && isVisibleDrag === true) {
             this.popup.querySelector('[data-button-drag-id="0"]').classList.remove('hide');
