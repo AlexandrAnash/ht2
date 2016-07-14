@@ -210,38 +210,46 @@ body {
     width: 100%;
     position: relative;
 }
-.button-position {
+.position {
     position: absolute;
 }
-.button-position__press_0 {
-    left: 40px;
+.position__button-press_0 {
+    left: 2%;
 }
-.button-position__press_1 {
-    right: 40px;
+.position__button-press_1 {
+    right: 2%;
 }
-.button-position__drag_0 {
-    left: 100px;
-    z-index: 10px;
+.position_left {
+    left: 5%;
 }
-.button-position__drag_1 {
-    right: 100px;
-    z-index: 10px;
+.position_center {
+    left: 40%;
 }
-.button-position__drop_0 {
-    left: 100px;
-    z-index: 20px;
+.position_right {
+    right: 5%;
 }
-.button-position__drop_1 {
-    right: 100px;
-    z-index: 20px;
+.press-box {
+    padding: 5px;
+    border: 3px solid #0d00ff;
+    border-radius: 35px;
 }
-
+.press-box_keys {
+    border: 3px solid green;
+}
+.press-box__key {
+    width: 66px;
+    height: 132px;
+}
 .button_error {
     background-color: red;
 }
 
 .button_success {
     background-color:green;
+}
+
+.button_warning {
+    background-color: yellow;
 }
 .popup_level_1 {
 }
