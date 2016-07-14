@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Dungeon of Doom</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/app.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <!-- Thanks for assets to Kenny at http://kenney.nl/assets/platformer-pack-redux -->
+    <div class="app container">
+        <div class="level level_0"><div class="door door_locked door_level_0"></div></div>
+        <div class="level level_1"><div class="door door_locked door_disabled door_level_1"></div></div>
+        <div class="level level_2"><div class="door door_locked door_disabled door_level_2"></div></div>
+        <div class="level level_3"><div class="box box_locked door_disabled door door_level_3"></div></div>
+        <div class="level level_4"></div>
+
+        <div class="popup popup_hidden popup_level_0">
+            <div class="popup__content popup__content_level_0" touch-action="none">
+                <div class="popup__close">╳</div>
+                <div class="door-riddle">
+                    <div class="door-riddle__button door-riddle__button_0"></div>
+                    <div class="door-riddle__button door-riddle__button_1"></div>
+                    <div class="door-riddle__button door-riddle__button_2"></div>
+                </div>
+            </div>
+        </div>
+        <div class="popup popup_hidden popup_level_1">
+            <div class="popup__content popup__content_level_1" touch-action="none">
+                <div class="popup__close">╳</div>
+                    <div class="door-riddle door-riddle_column">
+                        <div class="door-riddle__content">
+                            <div class="door-riddle__button button-drag position position_left"
+                                data-button-drag-id="0"></div>
+                            <div class="door-riddle__button button-drag position position_center"
+                                data-button-drag-id="1"></div>
+                            <div class="door-riddle__button button-drag position position_right"
+                                data-button-drag-id="2"></div>
+                        </div>
+                        <div class="door-riddle__footer">
+                            <div class="door-riddle__button button-drop position position_left"
+                                data-button-drop-id="0"></div>
+                            <div class="door-riddle__button button-drop position position_center"
+                                data-button-drop-id="1"></div>
+                            <div class="door-riddle__button button-drop position position_right"
+                                data-button-drop-id="2"></div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="popup popup_hidden popup_level_2">
+            <div class="popup__content popup__content_level_2" touch-action="none">
+                <div class="popup__close">╳</div>
+                <div class="door-riddle door-riddle_column">
+                    <div class="door-riddle__header">
+                        <div class="door-riddle__button button_error position position_left"
+                             data-button-press-id="0"></div>
+                        <div class="door-riddle__button button_error position position_right"
+                             data-button-press-id="1"></div>
+                    </div>
+                    <div class="door-riddle__content">
+                        <div class="door-riddle__button button-drag position position_left"
+                             data-button-drag-id="0"></div>
+                        <div class="door-riddle__button button-drag position position_right"
+                             data-button-drag-id="1"></div>
+                    </div>
+                    <div class="door-riddle__footer">
+                        <div class="door-riddle__button button-drop position position_left"
+                             data-button-drop-id="0"></div>
+                        <div class="door-riddle__button button-drop position position_right"
+                             data-button-drop-id="1"></div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div class="popup popup_hidden popup_level_3">
+            <div class="popup__content popup__content_level_3" touch-action="none">
+                <div class="popup__close">╳</div>
+                <div class="door-riddle door-riddle_column">
+                    <div class="door-riddle__header">
+                        <div class="press-box position position_left">
+                            <div class="door-riddle__button button_error"
+                                data-button-press-id="0"></div>
+                            <div class="door-riddle__button button_error"
+                                data-button-press-id="1"></div>
+                        </div>
+                        <!--<div class="press-box press-box_keys position position_center"
+                             data-press-box-id="0">
+                            <div class="press-box__keys">
+                                <div class="press-box__key"></div>
+                            </div>     
+                        </div>-->
+                        <div class="press-box position position_right">
+                            <div class="door-riddle__button button_error"
+                                data-button-press-id="2"></div>
+                            <div class="door-riddle__button button_error"
+                                data-button-press-id="3"></div>
+                        </div>     
+                    </div>
+                    <div class="door-riddle__content">
+                        <div class="door-riddle__button button-drag position position_left hide"
+                             data-button-drag-id="0"></div>
+                        <div class="door-riddle__button button-drag position position_right"
+                             data-button-drag-id="1"></div>
+                    </div>
+                    <div class="door-riddle__footer">
+                        <div class="door-riddle__button button-drop position position_left"
+                             data-button-drop-id="0"></div>
+                        <div class="door-riddle__button button-drop position position_right"
+                             data-button-drop-id="1"></div>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/pep.js"></script>
+    <script src="js/es5.js"></script>
+    <!--<script src="js/helper.js"></script>
+    <script src="js/buttons.js"></script>
+    <script src="js/doorBase.js"></script>
+    <script src="js/doorOthers.js"></script>
+    <script src="js/app.js"></script>-->
+</body>
+</html>
